@@ -1,0 +1,41 @@
+import React, { useState, useEffect } from 'react';
+import { ButtonCounter } from './components/ButtonCounter';
+
+export const App = () => {
+  const name: string = 'Hello React Button';
+  const [userData, setUserData] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    // let timer;
+    const query = () => {
+      setInterval(() => {
+        fetch(`https://api.github.com/search/users?q=${inputValue}`)
+          .then((res) => res.json())
+          .then((userData) => setUserData(userData.items));
+      }, 500);
+      console.log(userData);
+    };
+
+    query();
+  }, [inputValue]);
+  const handleValue = (e) => {
+    setInputValue(e.target.value);
+  };
+  return (
+    <div className="p-2">
+      <input
+        type="text"
+        placeholder="Enter name"
+        value={inputValue}
+        onChange={handleValue}
+      />
+
+      <ul>
+        {userData.map((item, index) => (
+          <li key={item.id}>{item.login}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
