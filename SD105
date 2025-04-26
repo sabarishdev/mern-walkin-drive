@@ -1,0 +1,48 @@
+import React, { useEffect } from 'react';
+import { ButtonCounter } from './components/ButtonCounter';
+
+export const App = () => {
+  const [username, SetUsername] = useEffect();
+  const [password, SetPassword] = useEffect();
+  const [mailid, Setmaild] = useEffect();
+
+  const userName = (e) => {
+    if (e.target.value) {
+      SetUsername(e.target.value);
+    } else {
+      alert('Please enther the user name');
+    }
+  };
+
+  const passwordEvent = (e) => {
+    if (e.target.value && e.target.length > 6) {
+      SetUsername(e.target.value);
+    } else {
+      alert('Please enther the password');
+    }
+  };
+
+  const email = (e) => {
+    if (e.target.value) {
+      SetUsername(e.target.value);
+    } else {
+      alert('Please enther the email ');
+    }
+  };
+
+  return (
+    <>
+      <span>
+        Name:{' '}
+        <input type="text" value={username} {onBlur((e)=>username(e))} > <input/>
+      </span>
+      
+      <input type="password" value={password} {onBlur((e)=>password(e)}>
+        {' '}
+      </input>
+      <input type="email" value={password} {}>
+        {' '}
+      </input>
+    </>
+  );
+};
