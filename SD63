@@ -1,0 +1,78 @@
+import React, { useEffect, useState } from 'react';
+import { ButtonCounter } from './components/ButtonCounter';
+// import axios from 'axios';
+// import axios from 'axios';
+
+export const App = () => {
+  const [laoding, setLoading] = useState(false);
+  const [porduct, setProduct] = useState([]);
+
+  const name: string = 'Hello React Button';
+
+  const onChildClicked = (e: number) => {
+    console.warn('callback from parent triggered', e);
+  };
+
+  useEffect(() => {
+    console.log('testing');
+    setLoading(true);
+
+    // axios
+    //   .post('https://fakestoreapi.com/products')
+    //   .then((res) => {
+    //     console.log(res, 'response');
+
+    //     return JSON.stringify(res);
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    fetch('https://fakestoreapi.com/products')
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+
+        console.error('Error:', error);
+      });
+  }, []);
+
+  console.log(porduct, 'test');
+
+  return (
+    <div className="p-2">
+      {laoding ? (
+        <h1>Loading</h1>
+      ) : (
+        <table style={{ border: '2px solid' }}>
+          {/* <th> */}
+          {/* id */}
+          <th>id</th>
+          <th>avatar</th>
+          <th>pice</th>
+          <th>desc</th>
+          {/* </th> */}
+          {porduct.map((e) => (
+            <tbody>
+              <td>{e.id}</td>
+              <td>
+                <img src={e.image} style={{ maxWidth: '50px' }} />
+              </td>
+              <td>{e.price}</td>
+
+              <td>{e.description}</td>
+            </tbody>
+          ))}
+        </table>
+      )}
+    </div>
+  );
+};
